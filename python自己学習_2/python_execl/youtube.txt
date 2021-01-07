@@ -1,0 +1,25 @@
+/**
+ * provide Youtube Apis.
+ */
+@Singleton
+class YoutubeApi {
+
+  private lazy val client: OkHttpClient = new OkHttpClient()
+
+  /**
+   * Search Youtube Contents.
+   *
+   * @return 
+   */
+  def search(): String = {
+    val host: String = "https://www.googleapis.com/youtube/v3/search?"
+    val params: String = "part=snippet&regionCode=jp&q=hanaenatsuki&key=${key}"
+    val url: String = host + params
+    val request: Request = new Request.Builder().url(url).build()
+
+    client
+      .newCall(request)
+      .execute()
+      .body()
+      .string()
+  }
